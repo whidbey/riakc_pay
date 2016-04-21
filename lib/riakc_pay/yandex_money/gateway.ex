@@ -9,6 +9,10 @@ defmodule RiakcPay.YandexMoney.Gateway do
         end
     end
 
+    def name() do
+        "YandexMoney"
+    end
+    
     def purchase(app,config,charge,mode) do
         endpoint = endpoint(mode)
 

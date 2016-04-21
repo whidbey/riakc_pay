@@ -13,6 +13,10 @@ defmodule RiakcPay.PayPal.Payment do
 		end
 	end
 
+	def name() do
+		"PayPal"
+	end
+
 	def purchase(charge,mode,namespace,gateway,webhook,config) do
 		endpoint = endpoint(mode)
 		client_id = config["client_id"]
