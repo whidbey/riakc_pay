@@ -8,6 +8,7 @@ defmodule RiakcPay do
       # Start the endpoint when the application starts
       # Here you could define other workers and supervisors as children
       # worker(RiakcApi.Worker, [arg1, arg2, arg3]),
+      worker(RiakcPay.Support.Config,[]),
       supervisor(RiakcPay.Redis.RedixPool, [])
     ]
 
