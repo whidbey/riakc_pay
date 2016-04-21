@@ -5,7 +5,10 @@ defmodule RiakcPay.Support.Config do
     database: 0,
     size: 10,
     max_overflow: 5,
-    mode: :test,
+    http_timeout: :infinity,
+    http_recv_timeout: :infinity,
+    max_retries: 3,
+    mode: "test",
     gateway: "http://localhost/",
     webhook: "http://localhost/"
   }
@@ -56,16 +59,24 @@ defmodule RiakcPay.Support.Config do
     mode = opts[:mode] || get(:mode)
     gateway = opts[:gateway] || get(:gateway)
     webhook = opts[:webhook] || get(:webhook)
+    http_timeout = opts[:http_timeout] || get(:http_timeout)
+    http_recv_timeout = opts[:http_recv_timeout] || get(:http_recv_timeout)
+    max_retries = opts[:max_retries] || get(:max_retries)
     server = 
     [
       mode: mode,
       gateway: gateway,
-      webhook: webhook
+      webhook: webhook,
+      http_timeout: http_timeout,
+      http_recv_timeout: http_recv_timeout,
+      max_retries: max_retries
     ]
 
     Agent.update(RiakcPay.Support.Config,
       fn(config) ->
-        Map.merge(config,%{mode: mode,gateway: gateway,webhook: webhook})
+        Map.merge(config,%{mode: mode,gateway: gateway,webhook: webhook,
+          http_timeout: http_timeout, http_recv_timeout: http_recv_timeout,
+          max_retries: max_retries})
       end)
     server
   end
@@ -73,7 +84,7 @@ defmodule RiakcPay.Support.Config do
   def mode() do
     Agent.get(RiakcPay.Support.Config,
       fn(config)->
-        Map.get(config,:mode,:test)
+        Map.get(config,:mode,"test")
     end)
   end
   def gateway() do
@@ -86,6 +97,27 @@ defmodule RiakcPay.Support.Config do
     Agent.get(RiakcPay.Support.Config,
       fn(config)->
         Map.get(config,:webhook,"http://localhost")
+    end)
+  end
+
+  def http_timeout() do
+    Agent.get(RiakcPay.Support.Config,
+      fn(config)->
+        Map.get(config,:http_timeout,:infinity)
+    end)
+  end
+
+  def http_recv_timeout() do
+    Agent.get(RiakcPay.Support.Config,
+      fn(config)->
+        Map.get(config,:http_recv_timeout,:infinity)
+    end)
+  end
+
+  def max_retries() do
+    Agent.get(RiakcPay.Support.Config,
+      fn(config)->
+        Map.get(config,:max_retries,3)
     end)
   end
 
