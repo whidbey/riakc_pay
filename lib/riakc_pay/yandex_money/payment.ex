@@ -1,4 +1,4 @@
-defmodule RiakcPay.YandexMoney.Gateway do  
+defmodule RiakcPay.YandexMoney.Payment do  
 
 
     defp endpoint(mode) do

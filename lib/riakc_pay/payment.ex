@@ -8,7 +8,7 @@ defmodule RiakcPay.Payment do
 
   def readable_name(name) do
     payment = @payments[name]
-    payment.name()
+    payment.readable_name()
   end
 
   def purchase(charge,name,namespace,config) do
