@@ -9,7 +9,7 @@ defmodule RiakcPay.YandexMoney.Gateway do
         end
     end
 
-    def name() do
+    def readable_name() do
         "YandexMoney"
     end
     

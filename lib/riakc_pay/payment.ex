@@ -6,6 +6,11 @@ defmodule RiakcPay.Payment do
     "yandexmoney" => RiakcPay.YandexMoney.Payment
   }
 
+  def readable_name(name) do
+    payment = @payments[name]
+    payment.name()
+  end
+
   def purchase(charge,name,namespace,config) do
     payment = @payments[name]
     mode = Config.mode()
@@ -29,5 +34,6 @@ defmodule RiakcPay.Payment do
     webhook = Config.webhook()
     payment.cancel(charge,params,mode,namespace,gateway,webhook,config)
   end
+
 
 end

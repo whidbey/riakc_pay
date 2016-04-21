@@ -13,7 +13,7 @@ defmodule RiakcPay.PayPal.Payment do
 		end
 	end
 
-	def name() do
+	def readable_name() do
 		"PayPal"
 	end
 
