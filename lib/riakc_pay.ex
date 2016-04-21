@@ -1,0 +1,2 @@
+defmodule RiakcPay do
+end
