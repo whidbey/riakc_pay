@@ -1,6 +1,6 @@
 defmodule RiakcPay.PayPal.Payment do  
 	
-	alias RiakcPay.Support.Congig
+	alias RiakcPay.Support.Config
 
 	alias RiakcPay.Operation.Purchase
 	alias RiakcPay.PayPal.Operation.Execute
@@ -21,7 +21,7 @@ defmodule RiakcPay.PayPal.Payment do
 		endpoint = endpoint(mode)
 		client_id = config["client_id"]
 		secret = config["secret"]
-		max_retries = Congig.max_retries()
+		max_retries = Config.max_retries()
 		payment = 
 			Purchase.assemble(mode,charge)
 			|> Purchase.assemble_gateway(mode,charge,gateway)
@@ -37,7 +37,7 @@ defmodule RiakcPay.PayPal.Payment do
 
 		client_id = config["client_id"]
 		secret = config["secret"]
-		max_retries = Congig.max_retries()
+		max_retries = Config.max_retries()
 		Execute.create(mode,namespace,endpoint,client_id,
 			secret,invoice_id,payer_id,max_retries)
 	end
