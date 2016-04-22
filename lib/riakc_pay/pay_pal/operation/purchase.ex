@@ -9,7 +9,7 @@ defmodule RiakcPay.PayPal.Operation.Purchase do
   end
 
   def create(mode,namespace,endpoint,client_id,secret,payment,time) do
-    case request(namespace,endpoint,client_id,secret,payment) do
+    case request(mode,namespace,endpoint,client_id,secret,payment) do
       {:auth_error, _response} ->
         Authentication.clean_headers(mode,namespace)
         create(mode,namespace,endpoint,client_id,secret,payment,time - 1)
@@ -20,10 +20,10 @@ defmodule RiakcPay.PayPal.Operation.Purchase do
     end 
   end
   
-  defp request(namespace,endpoint,client_id,secret,payment) do
+  defp request(mode,namespace,endpoint,client_id,secret,payment) do
     json = Poison.encode!(payment)
     url = endpoint <> "payments/payment"
-    headers = Authentication.headers(namespace,endpoint,client_id,secret)
+    headers = Authentication.headers(mode,namespace,endpoint,client_id,secret)
     Http.post(url,headers,json)
     |> Response.handle
   end

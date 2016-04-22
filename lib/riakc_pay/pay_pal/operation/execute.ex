@@ -9,7 +9,7 @@ defmodule RiakcPay.PayPal.Operation.Execute do
   end
 
   def create(mode,namespace,endpoint,client_id,secret,invoice_id,payer_id,time) do
-    case request(namespace,endpoint,client_id,secret,invoice_id,payer_id) do
+    case request(mode,namespace,endpoint,client_id,secret,invoice_id,payer_id) do
       {:auth_error, _response} ->
         Authentication.clean_headers(mode,namespace)
         create(mode,namespace,endpoint,client_id,secret,invoice_id,payer_id,time - 1)
@@ -20,10 +20,10 @@ defmodule RiakcPay.PayPal.Operation.Execute do
     end
   end
   
-  defp request(namespace,endpoint,client_id,secret,invoice_id,payer_id) do
+  defp request(mode,namespace,endpoint,client_id,secret,invoice_id,payer_id) do
     url = endpoint <> "payments/payment/#{invoice_id}/execute"
     data = Poison.encode!(%{payer_id: payer_id})
-    headers = Authentication.headers(namespace,endpoint,client_id,secret)
+    headers = Authentication.headers(mode,namespace,endpoint,client_id,secret)
     Http.post(url,headers,data)
     |> Response.handle
 
