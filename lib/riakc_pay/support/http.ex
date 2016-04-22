@@ -4,7 +4,7 @@ defmodule RiakcPay.Support.Http do
   def post(url,headers,data,opts \\ []) do
     timeout = Config.http_timeout()
     recv_timeout = Config.http_recv_timeout()
-    opts = Enum.contact(opts,[timeout: timeout, recv_timeout: recv_timeout])
+    opts = Enum.concat(opts,[timeout: timeout, recv_timeout: recv_timeout])
     HTTPoison.post(url,data,headers,opts)
   end
 
