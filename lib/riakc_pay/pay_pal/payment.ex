@@ -2,7 +2,7 @@ defmodule RiakcPay.PayPal.Payment do
 	
 	alias RiakcPay.Support.Config
 
-	alias RiakcPay.Operation.Purchase
+	alias RiakcPay.PayPal.Operation.Purchase
 	alias RiakcPay.PayPal.Operation.Execute
 
 	defp endpoint(mode) do
