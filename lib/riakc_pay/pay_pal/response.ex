@@ -1,4 +1,4 @@
-defmodule RiakcPay.Gateway.PayPal.Response do
+defmodule RiakcPay.PayPal.Response do
 
 	def handle(response) do
     case response do
