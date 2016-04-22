@@ -8,11 +8,19 @@ defmodule RiakcPay.Payment do
 
   def readable_name(name) do
     payment = @payments[name]
-    payment.readable_name()
+    if nil == payment do
+      name
+    else
+      payment.readable_name()
+    end
+   
   end
 
   def purchase(charge,name,namespace,config) do
     payment = @payments[name]
+    unless payment do
+      raise UndefinedFunctionError("payment: #{name} is not defined")
+    end
     mode = Config.mode()
     gateway = Config.gateway()
     webhook = Config.webhook()
@@ -21,6 +29,9 @@ defmodule RiakcPay.Payment do
   
   def execute(charge,params,name,namespace,config) do
     payment = @payments[name]
+    unless payment do
+      raise UndefinedFunctionError("payment: #{name} is not defined")
+    end
     mode = Config.mode()
     gateway = Config.gateway()
     webhook = Config.webhook()
@@ -29,6 +40,9 @@ defmodule RiakcPay.Payment do
 
   def cancel(charge,params,name,namespace,config) do
     payment = @payments[name]
+    unless payment do
+      raise UndefinedFunctionError("payment: #{name} is not defined")
+    end
     mode = Config.mode()
     gateway = Config.gateway()
     webhook = Config.webhook()
